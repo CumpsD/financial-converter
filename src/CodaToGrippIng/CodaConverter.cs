@@ -16,8 +16,6 @@ namespace CodaToGrippIng
     public class CodaConverter
     {
         private readonly Parser _codaParser = new Parser();
-        private readonly CultureInfo _dutchCulture = CultureInfo.CreateSpecificCulture("nl-BE");
-        private readonly Regex _spaceReplace = new Regex("[ ]{2,}", RegexOptions.None);
 
         private readonly ILogger<CodaConverter> _logger;
         private readonly CodaConverterConfiguration _configuration;
@@ -33,18 +31,27 @@ namespace CodaToGrippIng
         public void Start()
         {
             foreach (var mapping in _configuration.Mappings)
+            foreach (var file in Directory.GetFiles(mapping.InPath, mapping.InExtension))
             {
-                switch (mapping.InType)
+                var statements = mapping.InType switch
                 {
-                    case StatementType.Coda:
-                        foreach (var file in Directory.GetFiles(mapping.InPath, mapping.InExtension))
-                        {
-                            var statements = ParseCoda(file);
-                            WriteCsvLines(
-                                ParseCodaToIngStatements(statements),
-                                mapping.OutPath,
-                                file);
-                        }
+                    StatementType.Coda => ParseCoda(file)
+                };
+
+                switch (mapping.OutType)
+                {
+                    case StatementType.ING:
+                        WriteCsvLines(
+                            statements.ToIng(_logger),
+                            mapping.OutPath,
+                            file);
+                        break;
+
+                    case StatementType.YNAB:
+                        WriteCsvLines(
+                            statements.ToYnab(_logger),
+                            mapping.OutPath,
+                            file);
                         break;
                 }
             }
@@ -59,48 +66,8 @@ namespace CodaToGrippIng
             return _codaParser.ParseFile(codaFile);
         }
 
-        private IEnumerable<IngStatement> ParseCodaToIngStatements(
-            IEnumerable<Statement> statements)
-        {
-            var ingStatementList = new List<IngStatement>();
-
-            foreach (var statement in statements)
-            {
-                _logger.LogInformation(
-                    "Parsing statement from {Date} for {AccountName}, {AccountNumber}",
-                    statement.Date.ToString("yyyyMMdd"),
-                    statement.Account.Name.Trim(),
-                    statement.Account.Number.Trim());
-
-                foreach (var transaction in statement.Transactions)
-                {
-                    var ingStatement = new IngStatement
-                    {
-                        Datum = transaction.TransactionDate.ToString("yyyyMMdd"),
-                        Naam = transaction.Account.Name.Trim(),
-                        Rekening = statement.Account.Number.Trim(),
-                        Code = "DV",
-                        AfBij = transaction.Amount >= Decimal.Zero ? "Bij" : "Af",
-                        Bedrag = Math.Abs(transaction.Amount).ToString(_dutchCulture),
-                        MutatieSoort = "Diversen",
-                        Mededelingen = !string.IsNullOrWhiteSpace(transaction.Message) ? _spaceReplace.Replace(transaction.Message, " ") : _spaceReplace.Replace(transaction.StructuredMessage, " ")
-                    };
-
-                    ingStatementList.Add(ingStatement);
-
-                    _logger.LogInformation(
-                        "Parsing transaction from {Date} for {Information}: {Amount}",
-                        ingStatement.Datum,
-                        ingStatement.Mededelingen,
-                        transaction.Amount.ToString("C", _dutchCulture));
-                }
-            }
-
-            return ingStatementList;
-        }
-
-        private void WriteCsvLines(
-            IEnumerable<IngStatement> csvLines,
+        private void WriteCsvLines<T>(
+            IEnumerable<T> csvLines,
             string outPath,
             string codaFile)
         {
@@ -110,7 +77,7 @@ namespace CodaToGrippIng
                 Delimiter = ","
             };
 
-            configuration.AutoMap<IngStatement>();
+            configuration.AutoMap<T>();
 
             if (!Directory.Exists(outPath))
                 Directory.CreateDirectory(outPath);
@@ -121,7 +88,7 @@ namespace CodaToGrippIng
 
             using (var text = File.CreateText(targetFile))
                 using (var csvWriter = new CsvWriter(text, configuration))
-                    csvWriter.WriteRecords<IngStatement>(csvLines);
+                    csvWriter.WriteRecords<T>(csvLines);
 
             _logger.LogInformation(
                 "Wrote {OutFile}",

@@ -2,6 +2,7 @@ src/CodaToGrippIng/Coda/**
 !src/CodaToGrippIng/Coda/placeholder
 
 Gripp/
+Ynab/
 
 .vs/
 .vscode/
