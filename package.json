@@ -1,6 +1,6 @@
 {
   "name": "coda-to-gripp-ing",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Convert CODA statements to ING statements to import in Gripp.",
   "author": "Cumps Consulting",
   "license": "EUPL-1.2",
