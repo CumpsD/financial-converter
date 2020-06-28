@@ -6,13 +6,33 @@ namespace FinancialConverter.Statements
     using System.IO;
     using System.Linq;
     using CodaParser.Statements;
+    using CodaParser.Values;
     using CsvHelper;
     using CsvHelper.Configuration;
+    using CsvHelper.Configuration.Attributes;
     using Microsoft.Extensions.Logging;
+    using Account = CodaParser.Statements.Account;
 
+    // Volgnummer;Uitvoeringsdatum;Valutadatum;Bedrag;Valuta rekening;TEGENPARTIJ VAN DE VERRICHTING;Details;Rekeningnummer
     public class BnpStatement
     {
-        public DateTime Something { get; set; }
+        public string Volgnummer { get; set; }
+
+        public DateTime Uitvoeringsdatum { get; set; }
+
+        public DateTime Valutadatum { get; set; }
+
+        public decimal Bedrag { get; set; }
+
+        [Name("Valuta rekening")]
+        public string ValutaRekening { get; set; }
+
+        [Name("TEGENPARTIJ VAN DE VERRICHTING")]
+        public string Tegenpartij { get; set; }
+
+        public string Details { get; set; }
+
+        public string Rekeningnummer { get; set; }
     }
 
     public static class BnpStatementExtensions
@@ -27,15 +47,15 @@ namespace FinancialConverter.Statements
             // BNP has a quirk where you have to check the previous file
             // to check which date was exported last.
             var previousFile = GetPreviousFile(inFiles, bnpFile);
-            var latestDate = GetLatestDate(previousFile);
+            var latestSequence = GetLatestSequence(previousFile);
 
             logger.LogInformation(
-                "Reading {FileType} file '{InFile}' from {Date}.",
+                "Reading {FileType} file '{InFile}' from '{Date}'.",
                 "BNP",
                 bnpFile,
-                latestDate.ToString("yyyy-MM-dd"));
+                latestSequence);
 
-            return ReadFile(bnpFile, latestDate);
+            return ReadFile(bnpFile, latestSequence);
         }
 
         private static string? GetPreviousFile(string[] inFiles, string file)
@@ -44,15 +64,15 @@ namespace FinancialConverter.Statements
             return previousIndex > 0 ? inFiles[previousIndex - 1] : null;
         }
 
-        private static DateTime GetLatestDate(string? file)
+        private static string GetLatestSequence(string? file)
         {
             if (file == null)
-                return DateTime.MinValue;
+                return "2000-0001";
 
             var configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 ShouldQuote = (_, __) => true,
-                Delimiter = ","
+                Delimiter = ";"
             };
 
             configuration.AutoMap<BnpStatement>();
@@ -63,17 +83,17 @@ namespace FinancialConverter.Statements
                 var records = csv.GetRecords<BnpStatement>();
 
                 return records
-                    .Select(x => x.Something)
+                    .Select(x => x.Volgnummer)
                     .Max();
             }
         }
 
-        private static List<Statement> ReadFile(string file, DateTime from)
+        private static IEnumerable<Statement> ReadFile(string file, string from)
         {
             var configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 ShouldQuote = (_, __) => true,
-                Delimiter = ","
+                Delimiter = ";"
             };
 
             configuration.AutoMap<BnpStatement>();
@@ -83,29 +103,51 @@ namespace FinancialConverter.Statements
             {
                 var records = csv.GetRecords<BnpStatement>();
                 var validRecords = records
-                    .Where(x => x.Something > from);
+                    .Where(x => string.Compare(x.Volgnummer, from, StringComparison.Ordinal) > 0)
+                    .ToList();
 
                 var transactions = new List<Transaction>();
                 foreach (var record in validRecords)
                 {
-                    // TODO: Create a Transaction to return
-                    Transaction transaction = null; // TODO: Create transaciton
+                    var transaction = new Transaction(
+                        new AccountOtherParty(
+                            record.Tegenpartij,
+                            string.Empty,
+                            record.Tegenpartij,
+                            record.ValutaRekening),
+                        1,
+                        1,
+                        record.Uitvoeringsdatum,
+                        record.Valutadatum,
+                        record.Bedrag,
+                        record.Details,
+                        record.Details,
+                        null);
 
                     transactions.Add(transaction);
                 }
 
-                Account account = null; // TODO: Create Account
+                var number = file.Substring(0, file.IndexOf("-", StringComparison.Ordinal));
+                var account = new Account(
+                    "BNP File",
+                    number,
+                    number,
+                    number,
+                    "EUR",
+                    "BE");
 
-                return new List<Statement>
-                {
-                    new Statement(
-                        transactions.Max(x => x.TransactionDate),
-                        null,
-                        0,
-                        0,
-                        string.Empty,
-                        transactions)
-                };
+                var statements = new List<Statement>();
+                if (transactions.Count > 0)
+                    statements.Add(
+                        new Statement(
+                            transactions.Max(x => x.TransactionDate),
+                            account,
+                            0,
+                            0,
+                            string.Empty,
+                            transactions));
+
+                return statements;
             }
         }
     }

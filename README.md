@@ -19,6 +19,7 @@
 ## Usage
 
 * Drop your CODA files in the Coda folder.
+* Drop your BNP Paribas files in the Fortis folder.
 * Have a look at the `appsettings.json` file to configure mappings.
 * Run the program
 * Collect your resulting files from your configured folders.
