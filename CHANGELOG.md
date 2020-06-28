@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/cumpsd/financial-converter/compare/v1.1.0...v1.2.0) (2020-06-28)
+
+
+### Features
+
+* rename to financial converter ([2d95b83](https://github.com/cumpsd/financial-converter/commit/2d95b836ad2ba7384efd2975b424adae7bf1a460))
+
 # [1.1.0](https://github.com/cumpsd/coda-to-gripp-ing/compare/v1.0.0...v1.1.0) (2020-06-28)
 
 
