@@ -13,15 +13,6 @@ namespace CodaToGrippIng
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
-    public class CodaConverterConfiguration
-    {
-        public const string ConfigurationPath = "CodaConverter";
-
-        public string InPath { get; set; } = "Coda";
-        public string InExtension { get; set; } = "*.cod";
-        public string OutPath { get; set; } = "Gripp";
-    }
-
     public class CodaConverter
     {
         private readonly Parser _codaParser = new Parser();
@@ -41,16 +32,39 @@ namespace CodaToGrippIng
 
         public void Start()
         {
-            foreach (string file in Directory.GetFiles(_configuration.InPath, _configuration.InExtension))
-                WriteCsvLines(ParseCodaToCsvLines(file), file);
+            foreach (var mapping in _configuration.Mappings)
+            {
+                switch (mapping.InType)
+                {
+                    case StatementType.Coda:
+                        foreach (var file in Directory.GetFiles(mapping.InPath, mapping.InExtension))
+                        {
+                            var statements = ParseCoda(file);
+                            WriteCsvLines(
+                                ParseCodaToIngStatements(statements),
+                                mapping.OutPath,
+                                file);
+                        }
+                        break;
+                }
+            }
         }
 
-        private IEnumerable<IngStatement> ParseCodaToCsvLines(string codaFile)
+        private IEnumerable<Statement> ParseCoda(string codaFile)
         {
-            var file = _codaParser.ParseFile(codaFile);
+            _logger.LogInformation(
+                "Reading {InFile}",
+                codaFile);
+
+            return _codaParser.ParseFile(codaFile);
+        }
+
+        private IEnumerable<IngStatement> ParseCodaToIngStatements(
+            IEnumerable<Statement> statements)
+        {
             var ingStatementList = new List<IngStatement>();
 
-            foreach (var statement in file)
+            foreach (var statement in statements)
             {
                 _logger.LogInformation(
                     "Parsing statement from {Date} for {AccountName}, {AccountNumber}",
@@ -85,7 +99,10 @@ namespace CodaToGrippIng
             return ingStatementList;
         }
 
-        private void WriteCsvLines(IEnumerable<IngStatement> csvLines, string codaFile)
+        private void WriteCsvLines(
+            IEnumerable<IngStatement> csvLines,
+            string outPath,
+            string codaFile)
         {
             var configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -95,8 +112,11 @@ namespace CodaToGrippIng
 
             configuration.AutoMap<IngStatement>();
 
+            if (!Directory.Exists(outPath))
+                Directory.CreateDirectory(outPath);
+
             var targetFile = Path.Combine(
-                _configuration.OutPath,
+                outPath,
                 Path.GetFileName(Path.ChangeExtension(codaFile, "csv")));
 
             using (var text = File.CreateText(targetFile))
