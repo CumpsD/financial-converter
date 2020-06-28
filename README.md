@@ -4,6 +4,18 @@
 
 > Convert various statement forms to another form so they can be imported.
 
+## Support
+
+### Reading
+
+* CODA
+* BNP Fortis
+
+### Writing
+
+* ING (csv for now, mt940 later)
+* YNAB
+
 ## Usage
 
 * Drop your CODA files in the Coda folder.

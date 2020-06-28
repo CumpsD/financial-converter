@@ -36,7 +36,8 @@ namespace FinancialConverter
                 {
                     var statements = mapping.InType switch
                     {
-                        StatementType.Coda => file.FromCoda(_logger)
+                        StatementType.Coda => file.FromCoda(_logger),
+                        StatementType.BNP => file.FromBnp(_logger)
                     };
 
                     switch (mapping.OutType)
