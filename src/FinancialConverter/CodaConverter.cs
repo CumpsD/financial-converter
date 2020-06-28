@@ -8,6 +8,7 @@ namespace FinancialConverter
     using System.IO;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
+    using System;
 
     public class CodaConverter
     {
@@ -32,12 +33,15 @@ namespace FinancialConverter
                     continue;
                 }
 
-                foreach (var file in Directory.GetFiles(mapping.InPath, mapping.InExtension))
+                var inFiles = Directory.GetFiles(mapping.InPath, mapping.InExtension);
+                Array.Sort(inFiles);
+
+                foreach (var file in inFiles)
                 {
                     var statements = mapping.InType switch
                     {
                         StatementType.Coda => file.FromCoda(_logger),
-                        StatementType.BNP => file.FromBnp(_logger)
+                        StatementType.BNP => file.FromBnp(_logger, inFiles)
                     };
 
                     switch (mapping.OutType)
