@@ -1,18 +1,12 @@
 namespace FinancialConverter.Statements
 {
-    using CodaParser;
     using CodaParser.Statements;
-    using FinancialConverter.Statements;
-    using CsvHelper;
-    using CsvHelper.Configuration;
     using CsvHelper.Configuration.Attributes;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Text.RegularExpressions;
-    using System.IO;
     using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Options;
 
     public class IngStatement
     {

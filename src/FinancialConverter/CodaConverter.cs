@@ -1,22 +1,16 @@
 namespace FinancialConverter
 {
-    using CodaParser;
-    using CodaParser.Statements;
     using FinancialConverter.Statements;
     using CsvHelper;
     using CsvHelper.Configuration;
-    using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Text.RegularExpressions;
     using System.IO;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
     public class CodaConverter
     {
-        private readonly Parser _codaParser = new Parser();
-
         private readonly ILogger<CodaConverter> _logger;
         private readonly CodaConverterConfiguration _configuration;
 
@@ -42,7 +36,7 @@ namespace FinancialConverter
                 {
                     var statements = mapping.InType switch
                     {
-                        StatementType.Coda => ParseCoda(file)
+                        StatementType.Coda => file.FromCoda(_logger)
                     };
 
                     switch (mapping.OutType)
@@ -65,16 +59,6 @@ namespace FinancialConverter
                     }
                 }
             }
-        }
-
-        private IEnumerable<Statement> ParseCoda(string codaFile)
-        {
-            _logger.LogInformation(
-                "Reading {FileType} file '{InFile}'.",
-                "CODA",
-                codaFile);
-
-            return _codaParser.ParseFile(codaFile);
         }
 
         private void WriteCsvLines<T>(
