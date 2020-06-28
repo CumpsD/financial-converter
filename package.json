@@ -6,7 +6,7 @@
   "license": "EUPL-1.2",
   "repository": {
     "type": "git",
-    "url": "git@github.com:cumpsd/functional-living.git"
+    "url": "git@github.com:cumpsd/coda-to-gripp-ing.git"
   },
   "dependencies": {},
   "devDependencies": {
