@@ -6,7 +6,6 @@ namespace FinancialConverter.Statements
     using System.IO;
     using System.Linq;
     using CodaParser.Statements;
-    using CodaParser.Values;
     using CsvHelper;
     using CsvHelper.Configuration;
     using CsvHelper.Configuration.Attributes;

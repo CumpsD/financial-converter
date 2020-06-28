@@ -40,13 +40,14 @@ namespace FinancialConverter
                 {
                     var statements = mapping.InType switch
                     {
-                        StatementType.Coda => file.FromCoda(_logger),
-                        StatementType.BNP => file.FromBnp(_logger, inFiles)
+                        InputStatementType.Coda => file.FromCoda(_logger),
+                        InputStatementType.BNP => file.FromBnp(_logger, inFiles)
+                        InputStatementType.Curve => file.FromCurve(_logger)
                     };
 
                     switch (mapping.OutType)
                     {
-                        case StatementType.ING:
+                        case OutputStatementType.ING:
                             WriteCsvLines(
                                 statements.ToIng(_logger),
                                 "ING",
@@ -54,7 +55,7 @@ namespace FinancialConverter
                                 file);
                             break;
 
-                        case StatementType.YNAB:
+                        case OutputStatementType.YNAB:
                             WriteCsvLines(
                                 statements.ToYnab(_logger),
                                 "YNAB",

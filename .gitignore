@@ -1,9 +1,12 @@
 src/FinancialConverter/Coda/**
 !src/FinancialConverter/Coda/placeholder
+src/FinancialConverter/Fortis/**
+!src/FinancialConverter/Fortis/placeholder
+src/FinancialConverter/Curve/**
+!src/FinancialConverter/Curve/placeholder
 
-Gripp/
-Ynab/
-Fortis/
+src/FinancialConverter/Gripp/**
+src/FinancialConverter/Ynab/**
 
 .vs/
 .vscode/

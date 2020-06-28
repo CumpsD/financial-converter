@@ -1,11 +1,15 @@
 namespace FinancialConverter
 {
-    public enum StatementType
+    public enum InputStatementType
     {
         Coda,
+        BNP,
+        Curve,
+    }
+    public enum OutputStatementType
+    {
         ING,
         YNAB,
-        BNP
     }
 
     public class CodaConverterConfiguration
@@ -17,11 +21,11 @@ namespace FinancialConverter
 
     public class CodaConverterConfigurationMapping
     {
-        public StatementType? InType { get; set; }
+        public InputStatementType? InType { get; set; }
         public string? InPath { get; set; }
         public string? InExtension { get; set; }
 
-        public StatementType? OutType { get; set; }
+        public OutputStatementType? OutType { get; set; }
         public string? OutPath { get; set; }
     }
 }
