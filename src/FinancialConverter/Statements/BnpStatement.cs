@@ -71,13 +71,14 @@ namespace FinancialConverter.Statements
             var configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 ShouldQuote = (_, __) => true,
-                Delimiter = ";"
+                Delimiter = ";",
+                CultureInfo = ImportCulture
             };
 
             configuration.AutoMap<BnpStatement>();
 
             using (var reader = new StreamReader(file))
-            using (var csv = new CsvReader(reader, ImportCulture))
+            using (var csv = new CsvReader(reader, configuration))
             {
                 var records = csv.GetRecords<BnpStatement>();
 
@@ -92,13 +93,14 @@ namespace FinancialConverter.Statements
             var configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 ShouldQuote = (_, __) => true,
-                Delimiter = ";"
+                Delimiter = ";",
+                CultureInfo = ImportCulture
             };
 
             configuration.AutoMap<BnpStatement>();
 
             using (var reader = new StreamReader(file))
-            using (var csv = new CsvReader(reader, ImportCulture))
+            using (var csv = new CsvReader(reader, configuration))
             {
                 var records = csv.GetRecords<BnpStatement>();
                 var validRecords = records
