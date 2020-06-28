@@ -5,6 +5,7 @@ namespace FinancialConverter
         Coda,
         ING,
         YNAB,
+        BNP
     }
 
     public class CodaConverterConfiguration

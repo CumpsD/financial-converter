@@ -31,30 +31,38 @@ namespace FinancialConverter
         public void Start()
         {
             foreach (var mapping in _configuration.Mappings)
-            foreach (var file in Directory.GetFiles(mapping.InPath, mapping.InExtension))
             {
-                var statements = mapping.InType switch
+                if (!Directory.Exists(mapping.InPath))
                 {
-                    StatementType.Coda => ParseCoda(file)
-                };
+                    _logger.LogError("Directory {InPath} does not exist.", mapping.InPath);
+                    continue;
+                }
 
-                switch (mapping.OutType)
+                foreach (var file in Directory.GetFiles(mapping.InPath, mapping.InExtension))
                 {
-                    case StatementType.ING:
-                        WriteCsvLines(
-                            statements.ToIng(_logger),
-                            "ING",
-                            mapping.OutPath,
-                            file);
-                        break;
+                    var statements = mapping.InType switch
+                    {
+                        StatementType.Coda => ParseCoda(file)
+                    };
 
-                    case StatementType.YNAB:
-                        WriteCsvLines(
-                            statements.ToYnab(_logger),
-                            "YNAB",
-                            mapping.OutPath,
-                            file);
-                        break;
+                    switch (mapping.OutType)
+                    {
+                        case StatementType.ING:
+                            WriteCsvLines(
+                                statements.ToIng(_logger),
+                                "ING",
+                                mapping.OutPath,
+                                file);
+                            break;
+
+                        case StatementType.YNAB:
+                            WriteCsvLines(
+                                statements.ToYnab(_logger),
+                                "YNAB",
+                                mapping.OutPath,
+                                file);
+                            break;
+                    }
                 }
             }
         }
