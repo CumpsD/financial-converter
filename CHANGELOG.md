@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/cumpsd/financial-converter/compare/v1.2.4...v1.3.0) (2020-06-28)
+
+
+### Features
+
+* add bnp paribas ([e5f4e77](https://github.com/cumpsd/financial-converter/commit/e5f4e77d8ad9fe498b06fc5597069b60971304c7))
+
 ## [1.2.4](https://github.com/cumpsd/financial-converter/compare/v1.2.3...v1.2.4) (2020-06-28)
 
 ## [1.2.3](https://github.com/cumpsd/financial-converter/compare/v1.2.2...v1.2.3) (2020-06-28)
