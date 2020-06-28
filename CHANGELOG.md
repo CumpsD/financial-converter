@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/cumpsd/financial-converter/compare/v1.3.0...v1.4.0) (2020-06-28)
+
+
+### Features
+
+* support windows and linux ([2922b56](https://github.com/cumpsd/financial-converter/commit/2922b56c739eb236cc9f0641a98700d3f5f4b3e9))
+
 # [1.3.0](https://github.com/cumpsd/financial-converter/compare/v1.2.4...v1.3.0) (2020-06-28)
 
 
