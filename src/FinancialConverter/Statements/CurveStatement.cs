@@ -97,7 +97,7 @@ namespace FinancialConverter.Statements
                         1,
                         record.Date.ToLocalTime(),
                         record.Date.ToLocalTime(),
-                        record.Amount,
+                        record.Amount * -1,
                         record.Notes,
                         record.Notes,
                         null);
