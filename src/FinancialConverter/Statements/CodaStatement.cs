@@ -1,13 +1,13 @@
 namespace FinancialConverter.Statements
 {
-    using CodaParser.Statements;
     using System.Collections.Generic;
-    using Microsoft.Extensions.Logging;
     using CodaParser;
+    using CodaParser.Statements;
+    using Microsoft.Extensions.Logging;
 
     public static class CodaStatementExtensions
     {
-        private static readonly Parser _codaParser = new Parser();
+        private static readonly Parser CodaParser = new Parser();
 
         public static IEnumerable<Statement> FromCoda(
             this string codaFile,
@@ -18,7 +18,7 @@ namespace FinancialConverter.Statements
                 "CODA",
                 codaFile);
 
-            return _codaParser.ParseFile(codaFile);
+            return CodaParser.ParseFile(codaFile);
         }
     }
 }

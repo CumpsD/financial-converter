@@ -1,14 +1,14 @@
 namespace FinancialConverter
 {
-    using FinancialConverter.Statements;
-    using CsvHelper;
-    using CsvHelper.Configuration;
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using CsvHelper;
+    using CsvHelper.Configuration;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using System;
+    using Statements;
 
     public class CodaConverter
     {

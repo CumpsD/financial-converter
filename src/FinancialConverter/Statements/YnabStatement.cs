@@ -1,10 +1,10 @@
 namespace FinancialConverter.Statements
 {
-    using CodaParser.Statements;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Text.RegularExpressions;
+    using CodaParser.Statements;
     using Microsoft.Extensions.Logging;
 
     public class YnabStatement
@@ -22,9 +22,9 @@ namespace FinancialConverter.Statements
 
     public static class YnabStatementExtensions
     {
-        private static readonly CultureInfo _exportCulture = CultureInfo.CreateSpecificCulture("en-US");
-        private static readonly CultureInfo _logCulture = CultureInfo.CreateSpecificCulture("nl-BE");
-        private static readonly Regex _spaceReplace = new Regex("[ ]{2,}", RegexOptions.None);
+        private static readonly CultureInfo ExportCulture = CultureInfo.CreateSpecificCulture("en-US");
+        private static readonly CultureInfo LogCulture = CultureInfo.CreateSpecificCulture("nl-BE");
+        private static readonly Regex SpaceReplace = new Regex("[ ]{2,}", RegexOptions.None);
 
         public static IEnumerable<YnabStatement> ToYnab(
             this IEnumerable<Statement> statements,
@@ -48,13 +48,13 @@ namespace FinancialConverter.Statements
                         Payee = transaction.Account.Name.Trim(),
                         Outflow = transaction.Amount >= 0
                             ? string.Empty
-                            : Math.Abs(transaction.Amount).ToString(_exportCulture),
+                            : Math.Abs(transaction.Amount).ToString(ExportCulture),
                         Inflow = transaction.Amount >= 0
-                            ? Math.Abs(transaction.Amount).ToString(_exportCulture)
+                            ? Math.Abs(transaction.Amount).ToString(ExportCulture)
                             : string.Empty,
                         Memo = !string.IsNullOrWhiteSpace(transaction.Message)
-                            ? _spaceReplace.Replace(transaction.Message, " ")
-                            : _spaceReplace.Replace(transaction.StructuredMessage, " ")
+                            ? SpaceReplace.Replace(transaction.Message, " ")
+                            : SpaceReplace.Replace(transaction.StructuredMessage, " ")
                     };
 
                     ynabStatementList.Add(ynabStatement);
@@ -64,7 +64,7 @@ namespace FinancialConverter.Statements
                         transaction.TransactionDate.ToString("yyyy-MM-dd"),
                         string.IsNullOrWhiteSpace(ynabStatement.Payee) ? "N/A" : ynabStatement.Payee,
                         ynabStatement.Memo,
-                        transaction.Amount.ToString("C", _logCulture));
+                        transaction.Amount.ToString("C", LogCulture));
                 }
             }
 

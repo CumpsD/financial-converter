@@ -1,14 +1,14 @@
 namespace FinancialConverter.Statements
 {
-    using CodaParser.Statements;
-    using System.Collections.Generic;
-    using Microsoft.Extensions.Logging;
     using System;
-    using CsvHelper.Configuration;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
-    using CsvHelper;
     using System.Linq;
+    using CodaParser.Statements;
+    using CsvHelper;
+    using CsvHelper.Configuration;
+    using Microsoft.Extensions.Logging;
 
     public class BnpStatement
     {
@@ -17,7 +17,7 @@ namespace FinancialConverter.Statements
 
     public static class BnpStatementExtensions
     {
-        private static readonly CultureInfo _importCulture = CultureInfo.CreateSpecificCulture("nl-BE");
+        private static readonly CultureInfo ImportCulture = CultureInfo.CreateSpecificCulture("nl-BE");
 
         public static IEnumerable<Statement> FromBnp(
             this string bnpFile,
@@ -58,7 +58,7 @@ namespace FinancialConverter.Statements
             configuration.AutoMap<BnpStatement>();
 
             using (var reader = new StreamReader(file))
-            using (var csv = new CsvReader(reader, _importCulture))
+            using (var csv = new CsvReader(reader, ImportCulture))
             {
                 var records = csv.GetRecords<BnpStatement>();
 
@@ -79,7 +79,7 @@ namespace FinancialConverter.Statements
             configuration.AutoMap<BnpStatement>();
 
             using (var reader = new StreamReader(file))
-            using (var csv = new CsvReader(reader, _importCulture))
+            using (var csv = new CsvReader(reader, ImportCulture))
             {
                 var records = csv.GetRecords<BnpStatement>();
                 var validRecords = records

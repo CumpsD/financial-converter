@@ -1,11 +1,11 @@
 namespace FinancialConverter.Statements
 {
-    using CodaParser.Statements;
-    using CsvHelper.Configuration.Attributes;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Text.RegularExpressions;
+    using CodaParser.Statements;
+    using CsvHelper.Configuration.Attributes;
     using Microsoft.Extensions.Logging;
 
     public class IngStatement
@@ -34,9 +34,9 @@ namespace FinancialConverter.Statements
 
     public static class IngStatementExtensions
     {
-        private static readonly CultureInfo _exportCulture = CultureInfo.CreateSpecificCulture("nl-BE");
-        private static readonly CultureInfo _logCulture = CultureInfo.CreateSpecificCulture("nl-BE");
-        private static readonly Regex _spaceReplace = new Regex("[ ]{2,}", RegexOptions.None);
+        private static readonly CultureInfo ExportCulture = CultureInfo.CreateSpecificCulture("nl-BE");
+        private static readonly CultureInfo LogCulture = CultureInfo.CreateSpecificCulture("nl-BE");
+        private static readonly Regex SpaceReplace = new Regex("[ ]{2,}", RegexOptions.None);
 
         public static IEnumerable<IngStatement> ToIng(
             this IEnumerable<Statement> statements,
@@ -60,14 +60,14 @@ namespace FinancialConverter.Statements
                         Naam = transaction.Account.Name.Trim(),
                         Rekening = statement.Account.Number.Trim(),
                         Code = "DV",
-                        AfBij = transaction.Amount >= Decimal.Zero
+                        AfBij = transaction.Amount >= decimal.Zero
                             ? "Bij"
                             : "Af",
-                        Bedrag = Math.Abs(transaction.Amount).ToString(_exportCulture),
+                        Bedrag = Math.Abs(transaction.Amount).ToString(ExportCulture),
                         MutatieSoort = "Diversen",
                         Mededelingen = !string.IsNullOrWhiteSpace(transaction.Message)
-                            ? _spaceReplace.Replace(transaction.Message, " ")
-                            : _spaceReplace.Replace(transaction.StructuredMessage, " ")
+                            ? SpaceReplace.Replace(transaction.Message, " ")
+                            : SpaceReplace.Replace(transaction.StructuredMessage, " ")
                     };
 
                     ingStatementList.Add(ingStatement);
@@ -77,7 +77,7 @@ namespace FinancialConverter.Statements
                         transaction.TransactionDate.ToString("yyyy-MM-dd"),
                         string.IsNullOrWhiteSpace(ingStatement.Naam) ? "N/A" : ingStatement.Naam,
                         ingStatement.Mededelingen,
-                        transaction.Amount.ToString("C", _logCulture));
+                        transaction.Amount.ToString("C", LogCulture));
                 }
             }
 

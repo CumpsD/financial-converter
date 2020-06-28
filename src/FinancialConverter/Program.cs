@@ -1,4 +1,4 @@
-﻿namespace FinancialConverter
+namespace FinancialConverter
 {
     using System;
     using System.IO;
@@ -75,9 +75,6 @@
 
             builder
                 .RegisterModule(new LoggingModule(configuration, services));
-
-            var tempProvider = services.BuildServiceProvider();
-            var loggerFactory = tempProvider.GetService<ILoggerFactory>();
 
             services
                 .Configure<CodaConverterConfiguration>(configuration.GetSection(CodaConverterConfiguration.ConfigurationPath));
