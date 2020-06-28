@@ -1,14 +1,15 @@
-# CODA to Gripp ING
+# Financial Converter
 
 ## Goal
 
-> Convert CODA statements to ING statements to import in Gripp.
+> Convert various statement forms to another form so they can be imported.
 
 ## Usage
 
 * Drop your CODA files in the Coda folder.
+* Have a look at the `appsettings.json` file to configure mappings.
 * Run the program
-* Collect your ING csv files from the Gripp folder.
+* Collect your resulting files from your configured folders.
 
 ## Credits
 

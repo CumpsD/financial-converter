@@ -1,4 +1,4 @@
-namespace CodaToGrippIng
+namespace FinancialConverter
 {
     public enum StatementType
     {

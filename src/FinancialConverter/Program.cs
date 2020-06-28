@@ -1,4 +1,4 @@
-﻿namespace CodaToGrippIng
+﻿namespace FinancialConverter
 {
     using System;
     using System.IO;
@@ -42,7 +42,7 @@
             var container = ConfigureServices(configuration);
             var logger = container.GetRequiredService<ILogger<Program>>();
 
-            logger.LogInformation("Starting CODA to Gripp ING Converter");
+            logger.LogInformation("Starting Financial Converter.");
 
             try
             {

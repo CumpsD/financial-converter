@@ -1,4 +1,4 @@
-namespace CodaToGrippIng.Infrastructure.Modules
+namespace FinancialConverter.Infrastructure.Modules
 {
     using System;
     using Autofac;

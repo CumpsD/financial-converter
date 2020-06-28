@@ -1,12 +1,12 @@
 {
-  "name": "coda-to-gripp-ing",
+  "name": "financial-converter",
   "version": "1.1.0",
-  "description": "Convert CODA statements to ING statements to import in Gripp.",
+  "description": "Convert various statement forms to another form so they can be imported.",
   "author": "Cumps Consulting",
-  "license": "EUPL-1.2",
+  "license": "GPL2",
   "repository": {
     "type": "git",
-    "url": "git@github.com:cumpsd/coda-to-gripp-ing.git"
+    "url": "git@github.com:cumpsd/financial-converter.git"
   },
   "dependencies": {},
   "devDependencies": {

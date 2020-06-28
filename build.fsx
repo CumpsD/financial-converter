@@ -11,11 +11,10 @@ open Fake.Core.TargetOperators
 open Fake.DotNet
 open ``Build-generic``
 
-let product = "CODA to Gripp ING"
+let product = "Financial Converter"
 let copyright = "Copyright (c) Cumps Consulting"
 let company = "Cumps Consulting"
 
-let dockerRepository = "coda-to-gripp-ing"
 let assemblyVersionNumber = (sprintf "2.%s")
 let nugetVersionNumber = (sprintf "2.%s")
 
@@ -26,21 +25,18 @@ let publish = publish assemblyVersionNumber
 
 supportedRuntimeIdentifiers <- [ "linux-x64" ]
 
-Target.create "Restore_Solution" (fun _ -> restore "CodaToGrippIng")
+Target.create "Restore_Solution" (fun _ -> restore "FinancialConverter")
 
 Target.create "Build_Solution" (fun _ ->
   setVersions "SolutionInfo.cs"
-  build "CodaToGrippIng")
+  build "FinancialConverter")
 
-Target.create "Test_Solution" (fun _ -> test "CodaToGrippIng")
+Target.create "Test_Solution" (fun _ -> test "FinancialConverter")
 
 Target.create "Publish_Solution" (fun _ ->
   [
-    "CodaToGrippIng"
-  ] |> List.iter publish
-
-
-  )
+    "FinancialConverter"
+  ] |> List.iter publish)
 
 Target.create "Build" ignore
 Target.create "Test" ignore

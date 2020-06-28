@@ -1,8 +1,8 @@
-namespace CodaToGrippIng
+namespace FinancialConverter
 {
     using CodaParser;
     using CodaParser.Statements;
-    using CodaToGrippIng.Statements;
+    using FinancialConverter.Statements;
     using CsvHelper;
     using CsvHelper.Configuration;
     using System;
@@ -43,6 +43,7 @@ namespace CodaToGrippIng
                     case StatementType.ING:
                         WriteCsvLines(
                             statements.ToIng(_logger),
+                            "ING",
                             mapping.OutPath,
                             file);
                         break;
@@ -50,6 +51,7 @@ namespace CodaToGrippIng
                     case StatementType.YNAB:
                         WriteCsvLines(
                             statements.ToYnab(_logger),
+                            "YNAB",
                             mapping.OutPath,
                             file);
                         break;
@@ -60,7 +62,8 @@ namespace CodaToGrippIng
         private IEnumerable<Statement> ParseCoda(string codaFile)
         {
             _logger.LogInformation(
-                "Reading {InFile}",
+                "Reading {FileType} file '{InFile}'.",
+                "CODA",
                 codaFile);
 
             return _codaParser.ParseFile(codaFile);
@@ -68,8 +71,9 @@ namespace CodaToGrippIng
 
         private void WriteCsvLines<T>(
             IEnumerable<T> csvLines,
+            string fileType,
             string outPath,
-            string codaFile)
+            string originalFile)
         {
             var configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -84,14 +88,15 @@ namespace CodaToGrippIng
 
             var targetFile = Path.Combine(
                 outPath,
-                Path.GetFileName(Path.ChangeExtension(codaFile, "csv")));
+                Path.GetFileName(Path.ChangeExtension(originalFile, "csv")));
 
             using (var text = File.CreateText(targetFile))
                 using (var csvWriter = new CsvWriter(text, configuration))
                     csvWriter.WriteRecords<T>(csvLines);
 
             _logger.LogInformation(
-                "Wrote {OutFile}",
+                "Wrote {FileType} file '{OutFile}'.",
+                fileType,
                 targetFile);
         }
     }

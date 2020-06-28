@@ -1,8 +1,8 @@
-namespace CodaToGrippIng.Statements
+namespace FinancialConverter.Statements
 {
     using CodaParser;
     using CodaParser.Statements;
-    using CodaToGrippIng.Statements;
+    using FinancialConverter.Statements;
     using CsvHelper;
     using CsvHelper.Configuration;
     using CsvHelper.Configuration.Attributes;
@@ -42,7 +42,7 @@ namespace CodaToGrippIng.Statements
             foreach (var statement in statements)
             {
                 logger.LogInformation(
-                    "Parsing statement from {Date} for {AccountName}, {AccountNumber}",
+                    "Parsing statement from {Date} for {AccountName}, {AccountNumber}.",
                     statement.Date.ToString("yyyyMMdd"),
                     statement.Account.Name.Trim(),
                     statement.Account.Number.Trim());
