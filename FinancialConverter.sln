@@ -1,13 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialConverter", "src\FinancialConverter\FinancialConverter.csproj", "{FCC5F112-B89F-43EA-8915-E55A31266DD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinancialConverter", "src\FinancialConverter\FinancialConverter.csproj", "{FCC5F112-B89F-43EA-8915-E55A31266DD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodaParser", "src\CodaParser\CodaParser.csproj", "{0492BFDE-5A5B-4BAE-94C6-393F375F4BD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodaParser", "src\CodaParser\CodaParser.csproj", "{0492BFDE-5A5B-4BAE-94C6-393F375F4BD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodaParserTests", "test\CodaParserTests\CodaParserTests.csproj", "{10668EE5-0DF8-47CA-9F55-E043A0A3908C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodaParserTests", "test\CodaParserTests\CodaParserTests.csproj", "{10668EE5-0DF8-47CA-9F55-E043A0A3908C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{240EACBB-88B4-436F-8809-17556188BB63}"
+	ProjectSection(SolutionItems) = preProject
+		build.fsx = build.fsx
+		global.json = global.json
+		paket.dependencies = paket.dependencies
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,9 +25,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FCC5F112-B89F-43EA-8915-E55A31266DD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -58,5 +63,11 @@ Global
 		{10668EE5-0DF8-47CA-9F55-E043A0A3908C}.Release|x64.Build.0 = Release|Any CPU
 		{10668EE5-0DF8-47CA-9F55-E043A0A3908C}.Release|x86.ActiveCfg = Release|Any CPU
 		{10668EE5-0DF8-47CA-9F55-E043A0A3908C}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB5740F8-376F-473E-A085-677DC73FF181}
 	EndGlobalSection
 EndGlobal

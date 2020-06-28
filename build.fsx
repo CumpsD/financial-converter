@@ -23,7 +23,7 @@ let setVersions = (setSolutionVersions assemblyVersionNumber product copyright c
 let test = testSolution
 let publish = publish assemblyVersionNumber
 
-supportedRuntimeIdentifiers <- [ "linux-x64" ]
+supportedRuntimeIdentifiers <- [ "linux-x64"; "win-x64" ]
 
 Target.create "Restore_Solution" (fun _ -> restore "FinancialConverter")
 
