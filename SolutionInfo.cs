@@ -5,7 +5,7 @@ using System.Reflection;
 [assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.0.0.0")]
 [assembly: AssemblyInformationalVersion("")]
-[assembly: AssemblyProduct("CODA to Gripp ING")]
+[assembly: AssemblyProduct("Financial Converter")]
 [assembly: AssemblyCopyright("Copyright (c) Cumps Consulting")]
 [assembly: AssemblyCompany("Cumps Consulting")]
 namespace System {
@@ -13,7 +13,7 @@ namespace System {
         internal const System.String AssemblyVersion = "2.0.0.0";
         internal const System.String AssemblyFileVersion = "2.0.0.0";
         internal const System.String AssemblyInformationalVersion = "";
-        internal const System.String AssemblyProduct = "CODA to Gripp ING";
+        internal const System.String AssemblyProduct = "Financial Converter";
         internal const System.String AssemblyCopyright = "Copyright (c) Cumps Consulting";
         internal const System.String AssemblyCompany = "Cumps Consulting";
     }
