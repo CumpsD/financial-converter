@@ -1,6 +1,6 @@
 {
   "name": "financial-converter",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Convert various statement forms to another form so they can be imported.",
   "author": "Cumps Consulting",
   "license": "GPL2",
