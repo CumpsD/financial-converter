@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/cumpsd/financial-converter/compare/v1.4.0...v1.5.0) (2020-06-28)
+
+
+### Features
+
+* add curve support ([47beeea](https://github.com/cumpsd/financial-converter/commit/47beeeaa2154043d984e35f919691b1d99a123c4))
+
 # [1.4.0](https://github.com/cumpsd/financial-converter/compare/v1.3.0...v1.4.0) (2020-06-28)
 
 
