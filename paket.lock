@@ -1,10 +1,6 @@
 RESTRICTION: == netcoreapp3.1
 NUGET
   remote: https://api.nuget.org/v3/index.json
-    Autofac (5.2)
-    Autofac.Extensions.DependencyInjection (6.0)
-      Autofac (>= 5.0)
-      Microsoft.Extensions.DependencyInjection.Abstractions (>= 2.1)
     Be.Vlaanderen.Basisregisters.Build.Pipeline (4.2.1)
       Fake.Core.Environment (>= 5.20.1)
       Fake.Core.Process (>= 5.20.1)
@@ -169,7 +165,6 @@ NUGET
     Microsoft.Extensions.Configuration.Json (3.1.5)
       Microsoft.Extensions.Configuration (>= 3.1.5)
       Microsoft.Extensions.Configuration.FileExtensions (>= 3.1.5)
-    Microsoft.Extensions.DependencyInjection.Abstractions (3.1.5)
     Microsoft.Extensions.FileProviders.Abstractions (3.1.5)
       Microsoft.Extensions.Primitives (>= 3.1.5)
     Microsoft.Extensions.FileProviders.Physical (3.1.5)
