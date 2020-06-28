@@ -40,7 +40,10 @@ Target.create "Test_Solution" (fun _ -> test "CodaToGrippIng")
 Target.create "Publish_Solution" (fun _ ->
   [
     "CodaToGrippIng"
-  ] |> List.iter publish)
+  ] |> List.iter publish
+
+
+  )
 
 Target.create "Pack_Solution" (fun _ ->
   [

@@ -3,6 +3,8 @@
 
   <PropertyGroup>
     <EnableDefaultContentItems>false</EnableDefaultContentItems>
+    <PublishSingleFile>true</PublishSingleFile>
+    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -16,10 +18,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="appsettings.json" CopyToOutputDirectory="Always" />
-    <Content Include="appsettings.*.json" CopyToOutputDirectory="Always" />
-    <Content Include="Coda/**" CopyToOutputDirectory="Always" />
-    <Content Include="Gripp/**" CopyToOutputDirectory="Always" />
+    <Content Include="appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" ExcludeFromSingleFile="true" />
+    <Content Include="appsettings.*.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" ExcludeFromSingleFile="true" />
+    <Content Include="Coda/**" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" ExcludeFromSingleFile="true" />
+    <Content Include="Gripp/**" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" ExcludeFromSingleFile="true" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodaParser\CodaParser.csproj" />
   </ItemGroup>
 
   <ItemGroup>

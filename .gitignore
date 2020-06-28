@@ -1,3 +1,8 @@
+src/CodaToGrippIng/Coda/**
+src/CodaToGrippIng/Gripp/**
+!src/CodaToGrippIng/Coda/placeholder
+!src/CodaToGrippIng/Gripp/placeholder
+
 .vs/
 .vscode/
 .fake/
