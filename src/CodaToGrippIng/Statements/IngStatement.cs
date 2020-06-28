@@ -1,4 +1,4 @@
-namespace CodaToGrippIng
+namespace CodaToGrippIng.Statements
 {
     using CsvHelper.Configuration.Attributes;
 

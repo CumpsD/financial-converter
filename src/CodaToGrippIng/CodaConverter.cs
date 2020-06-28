@@ -2,6 +2,7 @@ namespace CodaToGrippIng
 {
     using CodaParser;
     using CodaParser.Statements;
+    using CodaToGrippIng.Statements;
     using CsvHelper;
     using CsvHelper.Configuration;
     using System;
