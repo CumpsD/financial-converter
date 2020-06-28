@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/cumpsd/financial-converter/compare/v1.5.0...v1.5.1) (2020-06-28)
+
+
+### Bug Fixes
+
+* reverse curve amount ([a241ed8](https://github.com/cumpsd/financial-converter/commit/a241ed868435297b06f1fe3f016fa1e00ca7c74c))
+
 # [1.5.0](https://github.com/cumpsd/financial-converter/compare/v1.4.0...v1.5.0) (2020-06-28)
 
 
