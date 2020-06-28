@@ -4,9 +4,21 @@ namespace FinancialConverter.Statements
     using System.Collections.Generic;
     using Microsoft.Extensions.Logging;
     using System;
+    using CsvHelper.Configuration;
+    using System.Globalization;
+    using System.IO;
+    using CsvHelper;
+    using System.Linq;
+
+    public class BnpStatement
+    {
+        public DateTime Something { get; set; }
+    }
 
     public static class BnpStatementExtensions
     {
+        private static readonly CultureInfo _importCulture = CultureInfo.CreateSpecificCulture("nl-BE");
+
         public static IEnumerable<Statement> FromBnp(
             this string bnpFile,
             ILogger logger,
@@ -37,16 +49,64 @@ namespace FinancialConverter.Statements
             if (file == null)
                 return DateTime.MinValue;
 
-            // TODO: Read csv and parse highest date
+            var configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                ShouldQuote = (_, __) => true,
+                Delimiter = ","
+            };
 
-            return DateTime.UtcNow;
+            configuration.AutoMap<BnpStatement>();
+
+            using (var reader = new StreamReader(file))
+            using (var csv = new CsvReader(reader, _importCulture))
+            {
+                var records = csv.GetRecords<BnpStatement>();
+
+                return records
+                    .Select(x => x.Something)
+                    .Max();
+            }
         }
 
         private static List<Statement> ReadFile(string file, DateTime from)
         {
-            // TODO: Read csv and filter out anything below from
+            var configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                ShouldQuote = (_, __) => true,
+                Delimiter = ","
+            };
 
-            return new List<Statement>();
+            configuration.AutoMap<BnpStatement>();
+
+            using (var reader = new StreamReader(file))
+            using (var csv = new CsvReader(reader, _importCulture))
+            {
+                var records = csv.GetRecords<BnpStatement>();
+                var validRecords = records
+                    .Where(x => x.Something > from);
+
+                var transactions = new List<Transaction>();
+                foreach (var record in validRecords)
+                {
+                    // TODO: Create a Transaction to return
+                    Transaction transaction = null; // TODO: Create transaciton
+
+                    transactions.Add(transaction);
+                }
+
+                Account account = null; // TODO: Create Account
+
+                return new List<Statement>
+                {
+                    new Statement(
+                        transactions.Max(x => x.TransactionDate),
+                        null,
+                        0,
+                        0,
+                        string.Empty,
+                        transactions)
+                };
+            }
         }
     }
 }
