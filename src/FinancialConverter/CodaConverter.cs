@@ -88,9 +88,19 @@ namespace FinancialConverter
                 outPath,
                 Path.GetFileName(Path.ChangeExtension(originalFile, "csv")));
 
+            if (File.Exists(targetFile))
+            {
+                _logger.LogInformation(
+                    "File already exists. Skipping {FileType} file '{OutFile}'.",
+                    fileType,
+                    targetFile);
+
+                return;
+            }
+
             using (var text = File.CreateText(targetFile))
                 using (var csvWriter = new CsvWriter(text, configuration))
-                    csvWriter.WriteRecords<T>(csvLines);
+                    csvWriter.WriteRecords(csvLines);
 
             _logger.LogInformation(
                 "Wrote {FileType} file '{OutFile}'.",
