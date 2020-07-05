@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/cumpsd/financial-converter/compare/v1.5.1...v1.6.0) (2020-07-05)
+
+
+### Features
+
+* skip if already exists ([55b99f2](https://github.com/cumpsd/financial-converter/commit/55b99f23f833fabfd6218c9b45bcb5d44bd646cb))
+
 ## [1.5.1](https://github.com/cumpsd/financial-converter/compare/v1.5.0...v1.5.1) (2020-06-28)
 
 
