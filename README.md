@@ -14,7 +14,8 @@
 
 ### Writing
 
-* ING (csv for now, mt940 later)
+* ING (To convert to MT940 if needed)
+* Gripp (SWIFT MT940)
 * YNAB
 
 ## Usage
