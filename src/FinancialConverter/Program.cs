@@ -42,6 +42,9 @@ namespace FinancialConverter
             var container = ConfigureServices(configuration);
             var logger = container.GetRequiredService<ILogger<Program>>();
 
+            Console.Write("Press [ENTER] to start.");
+            Console.ReadLine();
+
             logger.LogInformation("Starting Financial Converter.");
 
             try

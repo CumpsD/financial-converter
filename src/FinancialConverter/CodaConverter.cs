@@ -40,7 +40,7 @@ namespace FinancialConverter
                 {
                     var statements = mapping.InType switch
                     {
-                        InputStatementType.Coda => file.FromCoda(_logger),
+                        InputStatementType.CODA => file.FromCoda(_logger),
                         InputStatementType.BNP => file.FromBnp(_logger, inFiles),
                         InputStatementType.Curve => file.FromCurve(_logger)
                     };
@@ -59,6 +59,14 @@ namespace FinancialConverter
                             WriteCsvLines(
                                 statements.ToYnab(_logger),
                                 "YNAB",
+                                mapping.OutPath,
+                                file);
+                            break;
+
+                        case OutputStatementType.SWIFT:
+                            WriteSwiftLines(
+                                statements.ToSwift(_logger),
+                                "SWIFT",
                                 mapping.OutPath,
                                 file);
                             break;
@@ -101,6 +109,41 @@ namespace FinancialConverter
             using (var text = File.CreateText(targetFile))
                 using (var csvWriter = new CsvWriter(text, configuration))
                     csvWriter.WriteRecords(csvLines);
+
+            _logger.LogInformation(
+                "Wrote {FileType} file '{OutFile}'.",
+                fileType,
+                targetFile);
+        }
+
+        private void WriteSwiftLines(
+            IEnumerable<SwiftStatement> swiftLines,
+            string fileType,
+            string outPath,
+            string originalFile)
+        {
+            if (!Directory.Exists(outPath))
+                Directory.CreateDirectory(outPath);
+
+            var targetFile = Path.Combine(
+                outPath,
+                Path.GetFileName(Path.ChangeExtension(originalFile, "940")));
+
+            if (File.Exists(targetFile))
+            {
+                _logger.LogInformation(
+                    "File already exists. Skipping {FileType} file '{OutFile}'.",
+                    fileType,
+                    targetFile);
+
+                return;
+            }
+
+            using (var text = File.CreateText(targetFile))
+            {
+                var swiftWriter = new SwiftWriter(text);
+                swiftWriter.WriteRecords(swiftLines);
+            }
 
             _logger.LogInformation(
                 "Wrote {FileType} file '{OutFile}'.",

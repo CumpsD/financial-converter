@@ -2,7 +2,7 @@ namespace FinancialConverter
 {
     public enum InputStatementType
     {
-        Coda,
+        CODA,
         BNP,
         Curve,
     }
@@ -10,6 +10,7 @@ namespace FinancialConverter
     {
         ING,
         YNAB,
+        SWIFT,
     }
 
     public class CodaConverterConfiguration
