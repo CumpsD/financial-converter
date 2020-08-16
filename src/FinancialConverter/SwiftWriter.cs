@@ -18,11 +18,8 @@ namespace FinancialConverter
 
         public void WriteRecords(IEnumerable<SwiftStatement> swiftStatements)
         {
-            var statements = swiftStatements.ToArray();
-            Array.Reverse(statements);
-
             WriteHeader();
-            WriteStatements(statements);
+            WriteStatements(swiftStatements);
         }
 
         private void WriteHeader()
@@ -42,30 +39,33 @@ namespace FinancialConverter
             _writer.WriteLine($":20:940S{date}");
             _writer.WriteLine($":25:{swiftStatement.Account} EUR");
             _writer.WriteLine($":28C:0");
-            _writer.WriteLine($":60F:{(runningTotal > 0 ? 'D' : 'C')}{date}EUR{runningTotal.ToString(ExportCulture).PadLeft(15, '0')}");
+            _writer.WriteLine($":60F:{(runningTotal > 0 ? 'C' : 'D')}{date}EUR{Math.Abs(runningTotal).ToString("000000000000.00", ExportCulture)}");
 
             foreach (var swiftLine in swiftStatement.Lines)
             {
-                runningTotal += swiftLine.Amount;
+                runningTotal = swiftLine.IsCredit
+                    ? runningTotal + swiftLine.Amount
+                    : runningTotal - swiftLine.Amount;
+
                 WriteLine(date, swiftLine);
             }
 
-            _writer.WriteLine($":62F:{(runningTotal > 0 ? 'D' : 'C')}{date}EUR{runningTotal.ToString(ExportCulture).PadLeft(15, '0')}");
+            _writer.WriteLine($":62F:{(runningTotal > 0 ? 'C' : 'D')}{date}EUR{Math.Abs(runningTotal).ToString("000000000000.00", ExportCulture)}");
 
             return runningTotal;
         }
 
         private void WriteLine(string date, SwiftStatementLine swiftLine)
         {
-            var amount = swiftLine.Amount.ToString(ExportCulture);
+            var amount = swiftLine.Amount.ToString("000000000000.00", ExportCulture);
 
             if (swiftLine.IsCredit)
             {
-                _writer.WriteLine($":61:{date}C{amount.PadLeft(15, '0')}N127NONREF");
+                _writer.WriteLine($":61:{date}C{amount}N127NONREF");
             }
             else
             {
-                _writer.WriteLine($":61:{date}D{amount.PadLeft(15, '0')}N035NONREF");
+                _writer.WriteLine($":61:{date}D{amount}N035NONREF");
             }
 
             var reference = Split($":86:/BENM//NAME/{swiftLine.Name}/REMI/{swiftLine.Reference}", 65);
@@ -92,8 +92,11 @@ namespace FinancialConverter
             var str = new StringInfo(s);
             int lengthAbs = Math.Abs(length);
 
-            if (str == null || str.LengthInTextElements == 0 || lengthAbs == 0 || str.LengthInTextElements <= lengthAbs)
+            if (str == null || str.LengthInTextElements == 0 || lengthAbs == 0)
                 return new string[0];
+
+            if (str.LengthInTextElements <= lengthAbs)
+                return new string[] { str.String };
 
             string[] array = new string[(str.LengthInTextElements % lengthAbs == 0 ? str.LengthInTextElements / lengthAbs: (str.LengthInTextElements / lengthAbs) + 1)];
 

@@ -32,7 +32,7 @@ namespace FinancialConverter.Statements
             this IEnumerable<Statement> statements,
             ILogger logger)
         {
-            var swiftStatementList = new Dictionary<string, SwiftStatement>();
+            var swiftStatementList = new SortedDictionary<string, SwiftStatement>();
 
             foreach (var statement in statements)
             {
