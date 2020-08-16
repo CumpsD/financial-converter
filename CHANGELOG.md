@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/cumpsd/financial-converter/compare/v1.6.0...v1.7.0) (2020-08-16)
+
+
+### Features
+
+* add swift mt940 output ([c10a1df](https://github.com/cumpsd/financial-converter/commit/c10a1df210a94c8f286bbd08cbf5346c5fdd5690))
+
 # [1.6.0](https://github.com/cumpsd/financial-converter/compare/v1.5.1...v1.6.0) (2020-07-05)
 
 
