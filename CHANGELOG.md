@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/cumpsd/financial-converter/compare/v1.7.0...v1.7.1) (2020-08-16)
+
+
+### Bug Fixes
+
+* correctly write C D ([9307c5a](https://github.com/cumpsd/financial-converter/commit/9307c5a9faf9ccd96c845ab8066e2ab855639489))
+
 # [1.7.0](https://github.com/cumpsd/financial-converter/compare/v1.6.0...v1.7.0) (2020-08-16)
 
 
