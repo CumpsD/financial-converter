@@ -5,6 +5,7 @@ namespace FinancialConverter
         CODA,
         BNP,
         Curve,
+        Argenta
     }
     public enum OutputStatementType
     {

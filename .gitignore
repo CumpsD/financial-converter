@@ -4,6 +4,8 @@ src/FinancialConverter/Fortis/**
 !src/FinancialConverter/Fortis/placeholder
 src/FinancialConverter/Curve/**
 !src/FinancialConverter/Curve/placeholder
+src/FinancialConverter/Argenta/**
+!src/FinancialConverter/Argenta/placeholder
 
 src/FinancialConverter/Gripp/**
 src/FinancialConverter/Ynab/**

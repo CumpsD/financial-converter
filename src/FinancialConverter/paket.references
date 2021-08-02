@@ -18,5 +18,7 @@ Serilog.Extensions.Logging
 
 CsvHelper
 
+Npoi.Mapper
+
 SourceLink.Embed.AllSourceFiles
 SourceLink.Copy.PdbFiles

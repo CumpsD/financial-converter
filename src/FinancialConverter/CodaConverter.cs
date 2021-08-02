@@ -40,8 +40,9 @@ namespace FinancialConverter
                 {
                     var statements = mapping.InType switch
                     {
-                        InputStatementType.CODA => file.FromCoda(_logger),
+                        InputStatementType.Argenta => file.FromArgenta(_logger),
                         InputStatementType.BNP => file.FromBnp(_logger, inFiles),
+                        InputStatementType.CODA => file.FromCoda(_logger),
                         InputStatementType.Curve => file.FromCurve(_logger)
                     };
 
@@ -83,11 +84,11 @@ namespace FinancialConverter
         {
             var configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
-                ShouldQuote = (_, __) => true,
+                ShouldQuote = _ => true,
                 Delimiter = ","
             };
 
-            configuration.AutoMap<T>();
+            //configuration.AutoMap<T>();
 
             if (!Directory.Exists(outPath))
                 Directory.CreateDirectory(outPath);

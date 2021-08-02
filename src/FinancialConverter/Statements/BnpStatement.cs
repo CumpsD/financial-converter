@@ -68,14 +68,13 @@ namespace FinancialConverter.Statements
             if (file == null)
                 return "2000-0001";
 
-            var configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
+            var configuration = new CsvConfiguration(ImportCulture)
             {
-                ShouldQuote = (_, __) => true,
+                ShouldQuote = _ => true,
                 Delimiter = ";",
-                CultureInfo = ImportCulture
             };
 
-            configuration.AutoMap<BnpStatement>();
+            //configuration.AutoMap<BnpStatement>();
 
             using (var reader = new StreamReader(file))
             using (var csv = new CsvReader(reader, configuration))
@@ -90,14 +89,13 @@ namespace FinancialConverter.Statements
 
         private static IEnumerable<Statement> ReadFile(string file, string from)
         {
-            var configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
+            var configuration = new CsvConfiguration(ImportCulture)
             {
-                ShouldQuote = (_, __) => true,
+                ShouldQuote = _ => true,
                 Delimiter = ";",
-                CultureInfo = ImportCulture
             };
 
-            configuration.AutoMap<BnpStatement>();
+            //configuration.AutoMap<BnpStatement>();
 
             using (var reader = new StreamReader(file))
             using (var csv = new CsvReader(reader, configuration))

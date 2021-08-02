@@ -69,15 +69,14 @@ namespace FinancialConverter.Statements
 
         private static IEnumerable<Statement> ReadFile(string file)
         {
-            var configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
+            var configuration = new CsvConfiguration(ImportCulture)
             {
-                ShouldQuote = (_, __) => true,
+                ShouldQuote = _ => true,
                 Delimiter = ", ",
-                CultureInfo = ImportCulture,
-                HeaderValidated = (isValid, headerNames, headerNameIndex, context) => { }
+                HeaderValidated = _ => { }
             };
 
-            configuration.AutoMap<CurveStatement>();
+            //configuration.AutoMap<CurveStatement>();
 
             using (var reader = new StreamReader(file))
             using (var csv = new CsvReader(reader, configuration))

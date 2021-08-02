@@ -8,9 +8,10 @@
 
 ### Reading
 
+* Argenta
+* BNP Paribas
 * CODA
 * Curve
-* BNP Paribas
 
 ### Writing
 
@@ -20,9 +21,10 @@
 
 ## Usage
 
+* Drop your Argenta files in the Argenta folder.
+* Drop your BNP Paribas files in the Fortis folder.
 * Drop your CODA files in the Coda folder.
 * Drop your Curve files in the Curve folder.
-* Drop your BNP Paribas files in the Fortis folder.
 * Have a look at the `appsettings.json` file to configure mappings.
 * Run the program
 * Collect your resulting files from your configured folders.
