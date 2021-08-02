@@ -18,7 +18,7 @@ let company = "Cumps Consulting"
 let assemblyVersionNumber = (sprintf "2.%s")
 let nugetVersionNumber = (sprintf "2.%s")
 
-let build = buildSolution assemblyVersionNumber
+let build = build assemblyVersionNumber
 let setVersions = (setSolutionVersions assemblyVersionNumber product copyright company)
 let test = testSolution
 let publish = publish assemblyVersionNumber
